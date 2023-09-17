@@ -1,6 +1,6 @@
 #include "main.h"
 
-int _print(const char *format, ...)
+int _printf(const char *format, ...)
 {
 	int char_print = 0;
 
