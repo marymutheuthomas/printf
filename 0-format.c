@@ -8,37 +8,37 @@ int _print(const char *format, ...)
 	if (format == NULL)
 		return -1;
 	va_start(list_of_args, format);
-	while (*format)// loop that iterates through format of strings
+	while (*format)/** loop that iterates through format of strings**/
 	{
-		if (*format != '%')// format is not the % sign
+		if (*format != '%')/** format is not the % sign**/
 		{
-			write(1, format, 1);// write thw char to the standard output
+			write(1, format, 1);/** write thw char to the standard output**/
 			char_print++;
 		}
-		else// format is the % sign
+		else/** format is the % sign**/
 		{
-			format++;//skip '%' - check the next character 
+			format++;/**skip '%' - check the next character**/ 
 			if (*format == '\0')
 				break;
-			if (*format == '%')// this solves %%
+			if (*format == '%')/** this solves %%**/
 			{
-				//Handle '%%' (double %)
+				/**Handle '%%' (double %)**/
 				write(1, format, 1);
 				char_print++;
 			}
-			else if (*format == 'c')// Handles %c character
-			{	char c = va_arg(list_of_args, int);// use of va_arg(list of arguments
+			else if (*format == 'c')/**Handles %c character**/
+			{	char c = va_arg(list_of_args, int);/** use of va_arg(list of arguments**/
 				write(1, &c, 1);
 			}
-			else if (*format == 's')// Handles %s character
+			else if (*format == 's')/**Handles %s character**/
 			{
 				char *str = va_arg(list_of_args, char*);
 				int str_len = 0;
 				
-				//calculate the length of string
+				/**calculate the length of string**/
 				while (str[str_len] != '\0')
 					str_len++;
-				// write the string to the standard output
+				/**write the string to the standard output**/
 				write(1, str, str_len);
 				char_print += str_len;
 			}
