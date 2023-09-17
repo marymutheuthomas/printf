@@ -9,5 +9,5 @@ int print_string(char *str);
 int print_char(int c);
 int print_int(int num);
 
-#endif // MAIN_H
+#endif /* MAIN_H */
 

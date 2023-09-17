@@ -2,10 +2,9 @@
 
 int _printf(const char *format, ...) {
     va_list args;
-    va_start(args, format);
-
     int char_count = 0;
 
+    va_start(args, format);
     while (*format) {
         if (*format == '%') {
             format++;

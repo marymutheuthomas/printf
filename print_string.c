@@ -8,7 +8,7 @@
 int print_string(char *str)
 {
     int count = 0;
-    //check if string points to null 1st
+    /*check if string points to null 1st*/
     if (str)
     {
         while (*str != '\0')
@@ -21,6 +21,6 @@ int print_string(char *str)
     }
     else
     {
-        return (NULL);
+        return (-1);
     }
 }
