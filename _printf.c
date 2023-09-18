@@ -1,47 +1,49 @@
-#include"main.h"
+#include "main.h"
 
 int _printf(const char *format, ...) {
     va_list args;
-    int char_count = 0;
+    char buffer[BUFFER_SIZE];
+    char *bufptr = buffer;
+    int char_count = 0, count;
+    int handler_index; 
+    int num_handlers;
 
     va_start(args, format);
     while (*format) {
         if (*format == '%') {
-            format++;
-            switch (*format) {
-                case 'c': {
-                    char_count += print_char(va_arg(args, int));
-                    break;
-                }
-                case 's': {
-                    char_count += print_string(va_arg(args, char *));
-                    break;
-                }
+            format++; /* Move past the '%'*/
+            if (*format == '\0') {
+                break; /* Stop parsing if '%' is at the end*/
+	    }
+	    num_handlers = 0; /* Reset num_handlers*/
+	    while (handlers[num_handlers].specifier != 0) {
+        num_handlers++;
+    }
+            handler_index = find_handler(*format, handlers, num_handlers);
 
-                case '%':
-                    putchar('%');
-                    char_count++;
-                    break;
-                case 'd':
-                case 'i': {
-                    int num = va_arg(args, int);
-                    char_count += print_int(num);
-                    break;
-                }
-                default:
-                    putchar('%');
-                    char_count++;
-                    putchar(*format);
-                    char_count++;
-                    break;
+	    if (handler_index != -1) {
+                count = handlers[handler_index].handler(bufptr, args);
+                bufptr += count;
+                char_count += count;
+            } else {
+                /* Unsupported format specifier, ignore it*/
             }
         } else {
-            putchar(*format);
+            *bufptr++ = *format;
             char_count++;
         }
+
+        flush_buffer(buffer, &bufptr);
+
         format++;
+    }
+
+    /* Flush any remaining characters in the buffer*/
+    if (bufptr > buffer) {
+        write(STDOUT_FILENO, buffer, bufptr - buffer);
     }
 
     va_end(args);
     return char_count;
 }
+
