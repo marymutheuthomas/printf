@@ -15,45 +15,6 @@ FormatHandler handlers[] = {
     {0, NULL} /* sentinel value to mark the end*/
 };
 
-/* Function to handle the %c specifier*/
-int print_char(char *bufptr, va_list args) {
-    char c = va_arg(args, int);
-    *bufptr = c;
-    return 1;
-}
-
-
-/* Function to handle the %s specifier */
-int print_string(char *bufptr, va_list args) {
-    char *str = va_arg(args, char *);
-    int char_count = 0;
-
-    if (str == NULL) {
-        /* Handle NULL string as necessary (e.g., print "(null)")*/
-        char *null_str = "(null)";
-        while (*null_str) {
-            *bufptr++ = *null_str++;
-            char_count++;
-        }
-    } else {
-        while (*str) {
-            *bufptr++ = *str++;
-            char_count++;
-        }
-    }
-
-    return char_count;
-}
-
-
-/* Function to handle the %% specifier */
-int print_percent(char *bufptr, va_list args __attribute__((unused))) {
-    *bufptr = '%';
-    return 1;
-}
-
-
-
 int print_custom_string(char *bufptr, va_list args) {
     char *str = va_arg(args, char *);
     int char_count = 0;
@@ -77,48 +38,81 @@ int print_custom_string(char *bufptr, va_list args) {
     return char_count;
 }
 
-/* Custom format handler for %u */
+/*custom format handler for %% specifier*/
+int print_percent(char *bufptr, va_list args __attribute__((unused))) {
+    *bufptr = '%';
+    return 1;
+}
+
+
+int print_char(char *bufptr, va_list args) {
+    char c = va_arg(args, int);
+    *bufptr = c;
+    return 1;
+}
+
+/* Custom format handler for %s specifier*/
+int print_string(char *bufptr, va_list args) {
+    char *str = va_arg(args, char *);
+    int char_count = 0;
+
+    while (*str) {
+        *bufptr++ = *str++;
+        char_count++;
+    }
+
+    return char_count;
+}
+
+/* Custom format handler for %d and %i specifiers*/
+int print_int(char *bufptr, va_list args) {
+    int num = va_arg(args, int);
+    int char_count = 0;
+
+    char_count += sprintf(bufptr, "%d", num);
+    bufptr += char_count;
+
+    return char_count;
+}
+
+/* Custom format handler for %u specifier*/
 int print_uint(char *bufptr, va_list args) {
     unsigned int num = va_arg(args, unsigned int);
     int char_count = 0;
 
-    /* Print the unsigned integer*/
     char_count += sprintf(bufptr, "%u", num);
     bufptr += char_count;
 
     return char_count;
 }
 
-/* Custom format handler for %o (octal) */
+/* Custom format handler for %o (octal) specifier*/
 int print_octal(char *bufptr, va_list args) {
     unsigned int num = va_arg(args, unsigned int);
     int char_count = 0;
 
-    /* Print the unsigned integer in octal format*/
     char_count += sprintf(bufptr, "%o", num);
     bufptr += char_count;
 
     return char_count;
 }
 
-/* Custom format handler for %x (hexadecimal, lowercase) */
+/* Custom format handler for %x (hexadecimal, lowercase) specifier*/
 int print_hex(char *bufptr, va_list args) {
     unsigned int num = va_arg(args, unsigned int);
     int char_count = 0;
 
-    /* Print the unsigned integer in hexadecimal format*/
     char_count += sprintf(bufptr, "%x", num);
     bufptr += char_count;
 
     return char_count;
 }
 
-/* Custom format handler for %X (hexadecimal, uppercase) */
+/* Custom format handler for %X (hexadecimal, uppercase) specifier*/
 int print_hex_upper(char *bufptr, va_list args) {
     unsigned int num = va_arg(args, unsigned int);
     int char_count = 0;
 
-    /* Print the unsigned integer in uppercase hexadecimal format*/
     char_count += sprintf(bufptr, "%X", num);
     bufptr += char_count;
 
