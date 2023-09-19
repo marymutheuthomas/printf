@@ -29,11 +29,12 @@ void rot13(char *str) {
  */
 int handle_rot13(char *buffer, int *buffer_index, const char *str) {
     char rot13_str[BUFFER_SIZE];
+    int len;
     snprintf(rot13_str, BUFFER_SIZE, "%s", str); /* Make a copy of the original string*/
     rot13(rot13_str); /* Perform ROT13 transformation on the copy*/
 
     /* Print the ROT13'ed string */
-    int len = snprintf(buffer + *buffer_index, BUFFER_SIZE - *buffer_index, "%s", rot13_str);
+    len = snprintf(buffer + *buffer_index, BUFFER_SIZE - *buffer_index, "%s", rot13_str);
     if (*buffer_index + len >= BUFFER_SIZE - 1) {
         flush_buffer(buffer, buffer_index);
     }

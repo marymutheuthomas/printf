@@ -10,7 +10,7 @@
  * This function handles the %c format specifier and writes the character to the buffer.
  * It returns the number of characters written.
  */
-int print_c(char *buffer, int *buffer_index, const char *format, va_list args) {
+int print_c(char *buffer, int *buffer_index, va_list args) {
     char c = va_arg(args, int);
     append_to_buffer(buffer, buffer_index, c);
     return 1;
@@ -26,13 +26,14 @@ int print_c(char *buffer, int *buffer_index, const char *format, va_list args) {
  * This function handles the %s format specifier and writes the string to the buffer.
  * It returns the number of characters written.
  */
-int print_string(char *buffer, int *buffer_index, const char *format, va_list args) {
+int print_string(char *buffer, int *buffer_index, va_list args) {
     char *str = va_arg(args, char *);
+    int len = 0;
+
     if (str == NULL) {
         str = "(null)";
     }
 
-    int len = 0;
     while (str[len] != '\0') {
         append_to_buffer(buffer, buffer_index, str[len]);
         len++;
