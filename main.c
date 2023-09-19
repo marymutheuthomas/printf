@@ -1,42 +1,33 @@
 #include "main.h"
+#include <stdio.h>
 
-/**
- * main - Entry point
- *
- * Return: Always 0
-*/
+int main() {
+    // Test cases for _printf
 
-int main(void)
-{
-    int len;
-    int len2;
-    unsigned int ui;
-    /**void *addr;*/
-    ui = (unsigned int)INT_MAX + 1024;
- 
+    // Flags
+    _printf("Flags:\n");
+    _printf("%+d\n", 42);     // Should print "+42"
+    _printf("% d\n", 42);     // Should print " 42"
+    _printf("%#x\n", 42);    // Should print "0x2a"
+    _printf("%08x\n", 42);   // Should print "0000002a"
+    _printf("%-10s\n", "Hello"); // Should print "Hello     "
 
-    len = _printf("Let's try to printf a simple sentence.\n");
-    len2 = printf("Let's try to printf a simple sentence.\n");
-    _printf("Length:[%d, %i]\n", len, len);
-    printf("Length:[%d, %i]\n", len2, len2);
-    _printf("Unsigned:[%u]\n", ui);
-    printf("Unsigned:[%u]\n", ui);
-    _printf("Unsigned octal:[%o]\n", ui);
-    printf("Unsigned octal:[%o]\n", ui);
-    _printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
-    printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
-    _printf("Character:[%c]\n", 'H');
-    printf("Character:[%c]\n", 'H');
-    _printf("String:[%s]\n", "I am a string !");
-    printf("String:[%s]\n", "I am a string !");
-    len = _printf("Percent:[%%]\n");
-    len2 = printf("Percent:[%%]\n");
-    _printf("Len:[%d]\n", len);
-    printf("Len:[%d]\n", len2);
-    _printf("Negative:[%d]\n", -762534);
-    printf("Negative:[%d]\n", -762534);
-    _printf("%S\n", "Best\nSchool");
+    // Format Specifiers
+    _printf("\nFormat Specifiers:\n");
+    _printf("%d\n", 42);      // Should print "42"
+    _printf("%f\n", 3.14159); // Should print "3.141590"
+    _printf("%c\n", 'A');     // Should print "A"
+    _printf("%s\n", "World"); // Should print "World"
 
-    return (0);
+    // Width and Precision
+    _printf("\nWidth and Precision:\n");
+    _printf("%10.2f\n", 3.14159); // Should print "      3.14"
+    _printf("%.5s\n", "Hello");   // Should print "Hello"
+
+    // Rot13
+    _printf("\nRot13:\n");
+    _printf("%R\n", "Hello World"); // Should print "Uryyb Jbeyq"
+
+    return 0;
 }
 
